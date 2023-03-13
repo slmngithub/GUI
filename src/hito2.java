@@ -20,6 +20,8 @@ public class hito2 extends JFrame implements ActionListener {
         cb.setSize(new Dimension(100 , 50));
         cb.addActionListener(this);
         JButton clear = new JButton("clear");
+        clear.addActionListener(this , );
+        clear.addActionListener(this);
         Rp.add(cb);
         Rp.add(clear);
         f.add(Rp , BorderLayout.WEST);
@@ -34,6 +36,9 @@ public class hito2 extends JFrame implements ActionListener {
         Lp.add(T);
         f.add(Lp , BorderLayout.EAST);
         T.setBorder(BorderFactory.createTitledBorder("text"));
+        JScrollPane S = new JScrollPane (T);
+        f.add(S);
+
 
 
 
@@ -45,12 +50,12 @@ public class hito2 extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent a) {
-        String sele = cb.getSelectedItem().toString();
 
-
+        System.out.println(a.getSource());
+        String sele ="src" + File.separator + cb.getSelectedItem().toString();
         try{
             T.setText("");
-            File file = new File("C:\\Users\\ik012982i9\\Desktop\\oussama\\exam java\\GUI\\src\\" + sele );
+            File file = new File( sele );
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String s ;
             while ((s=reader.readLine())!=null){
@@ -61,5 +66,8 @@ public class hito2 extends JFrame implements ActionListener {
         } catch (IOException e) {
             T.setText(e.getMessage());
         }
+    }
+    public void actionPerformed(ActionEvent a , int w){
+        T.setText("");
     }
 }
