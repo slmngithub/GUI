@@ -27,14 +27,13 @@ public class hito2 extends JFrame implements ActionListener {
         //---------------------------------
         JPanel Lp = new JPanel();
         Lp.setLayout(new FlowLayout(FlowLayout.CENTER , 20 , 20));
-        Lp.setBorder(BorderFactory.create);
+
          T = new JTextArea();
         T.setEditable(false);
         T.setPreferredSize(new Dimension(500 , 500));
         Lp.add(T);
         f.add(Lp , BorderLayout.EAST);
-
-
+        T.setBorder(BorderFactory.createTitledBorder("text"));
 
 
 
