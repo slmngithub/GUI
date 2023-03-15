@@ -1,9 +1,9 @@
+package hito2;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.io.*;
 
 public class hito2 extends JFrame implements ActionListener /*, ItemListener */{
@@ -17,7 +17,7 @@ public class hito2 extends JFrame implements ActionListener /*, ItemListener */{
         JPanel Rp = new JPanel();
         //Rp.setLayout(new BoxLayout(Rp , BoxLayout.X_AXIS ));
         Rp.setLayout(new FlowLayout(FlowLayout.CENTER , 20 , 20));
-        String[] txts = {"elegir el nombre de archivo", "python.txt", "c.txt" , "java.txt" , "fechero no existe"};
+        String[] txts = {"elegir el nombre de archivo", "hito2/python.txt", "hito2/c.txt", "hito2/java.txt", "fechero no existe"};
          cb = new JComboBox<>(txts);
         //cb.setSize(new Dimension(100 , 50));
         cb.addActionListener(this);
