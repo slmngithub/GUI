@@ -2,9 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.*;
 
-public class hito2 extends JFrame implements ActionListener {
+public class hito2 extends JFrame implements ActionListener /*, ItemListener */{
     JFrame f;
     JComboBox cb;
     JTextArea T;
@@ -15,13 +17,20 @@ public class hito2 extends JFrame implements ActionListener {
         JPanel Rp = new JPanel();
         //Rp.setLayout(new BoxLayout(Rp , BoxLayout.X_AXIS ));
         Rp.setLayout(new FlowLayout(FlowLayout.CENTER , 20 , 20));
-        String[] txts = {"elegir el nombre de archivo", "python.txt", "c.txt" , "java.txt"};
+        String[] txts = {"elegir el nombre de archivo", "python.txt", "c.txt" , "java.txt" , "fechero no existe"};
          cb = new JComboBox<>(txts);
-        cb.setSize(new Dimension(100 , 50));
+        //cb.setSize(new Dimension(100 , 50));
         cb.addActionListener(this);
         JButton clear = new JButton("clear");
-        clear.addActionListener(this , );
-        clear.addActionListener(this);
+        clear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                T.setText("");
+            }
+        });
+
+
+
         Rp.add(cb);
         Rp.add(clear);
         f.add(Rp , BorderLayout.WEST);
@@ -29,15 +38,21 @@ public class hito2 extends JFrame implements ActionListener {
         //---------------------------------
         JPanel Lp = new JPanel();
         Lp.setLayout(new FlowLayout(FlowLayout.CENTER , 20 , 20));
-
-         T = new JTextArea();
+        T = new JTextArea();
         T.setEditable(false);
         T.setPreferredSize(new Dimension(500 , 500));
         Lp.add(T);
-        f.add(Lp , BorderLayout.EAST);
         T.setBorder(BorderFactory.createTitledBorder("text"));
         JScrollPane S = new JScrollPane (T);
         f.add(S);
+        f.add(Lp , BorderLayout.EAST);
+        //----------------PANEL CLOSE------------------
+        JPanel closeP=new JPanel();
+        JButton close= new JButton("close");
+        closeP.add(close);
+        close.addActionListener(this);
+        f.add(closeP,BorderLayout.SOUTH);
+
 
 
 
@@ -46,28 +61,69 @@ public class hito2 extends JFrame implements ActionListener {
         f.setVisible(true);
     }
 
-
-
-    @Override
     public void actionPerformed(ActionEvent a) {
+        if(a.getActionCommand().equals("comboBoxChanged")){
+            String sele ="src" + File.separator + cb.getSelectedItem().toString();
+            String src=cb.getSelectedItem().toString();
 
-        System.out.println(a.getSource());
-        String sele ="src" + File.separator + cb.getSelectedItem().toString();
-        try{
-            T.setText("");
-            File file = new File( sele );
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-            String s ;
-            while ((s=reader.readLine())!=null){
-                T.append(s + "\n");
+            if (!src.equals("elegir el nombre de archivo")){
+                try{
+                    T.setText("");
+                    File file = new File( sele );
+                    BufferedReader reader = new BufferedReader(new FileReader(file));
+                    String s ;
+                    while ((s=reader.readLine())!=null){
+                        T.append(s + "\n");
+                    }
+                } catch (FileNotFoundException e) {
+                    System.out.println("hola");
+                    T.setText("");
+                    JOptionPane.showMessageDialog(null , "File Not Found");
+
+                } catch (IOException e) {
+                    System.out.println("adios");
+                    T.setText("");
+                    JOptionPane.showMessageDialog(null , "Failed in read the file");
+                }
             }
-        } catch (FileNotFoundException e) {
-            T.setText(e.getMessage());
-        } catch (IOException e) {
-            T.setText(e.getMessage());
         }
+        else {
+            f.dispose();
+        }
+
     }
-    public void actionPerformed(ActionEvent a , int w){
-        T.setText("");
-    }
+
+    /*@Override
+    public void itemStateChanged(ItemEvent I) {
+        String sele ="src" + File.separator + cb.getSelectedItem().toString();
+        String src=cb.getSelectedItem().toString();
+        if (I.getStateChange() == 2){
+            return;
+        }
+        if (!src.equals("elegir el nombre de archivo")){
+            try{
+                T.setText("");
+                File file = new File( sele );
+                BufferedReader reader = new BufferedReader(new FileReader(file));
+                String s ;
+                while ((s=reader.readLine())!=null){
+                    T.append(s + "\n");
+                }
+            } catch (FileNotFoundException e) {
+                System.out.println("hola");
+                T.setText("");
+                JOptionPane.showMessageDialog(null , "File Not Found");
+
+            } catch (IOException e) {
+                System.out.println("adios");
+                T.setText("");
+                JOptionPane.showMessageDialog(null , "Failed in read the file");
+            }
+        }
+
+    }*/
+
+
 }
+
+
